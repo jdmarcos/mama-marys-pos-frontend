@@ -1,0 +1,115 @@
+
+:root{
+  --bg:#FFF7E6;
+  --card:#FFF3D9;
+  --brand:#8B4513;
+  --brand-2:#A0522D;
+  --text:#5B2E0F;
+  --muted:#91634a;
+  --danger:#c2392b;
+  --ok:#2b8a3e;
+  --radius:18px;
+  --shadow:0 8px 22px rgba(139,69,19,.12);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
+  background:var(--bg);
+  color:var(--text);
+}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;background:var(--brand);color:white;position:sticky;top:0;z-index:10
+}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{font-size:28px}
+.brand-title{font-weight:700}
+.brand-sub{font-size:12px;opacity:.9}
+
+.top-actions .btn{margin-left:8px}
+
+.screen{display:none;padding:22px;max-width:1200px;margin:0 auto}
+.screen.active{display:block;animation:fade .2s ease}
+.heading{margin:8px 0 18px}
+.grid{display:grid;gap:18px}
+.grid.cards-3{grid-template-columns:repeat(3,1fr)}
+.grid.cards-2{grid-template-columns:repeat(2,1fr)}
+.grid.two{grid-template-columns:1.2fr .8fr}
+@media(max-width:900px){.grid.cards-3,.grid.two{grid-template-columns:1fr}.grid.cards-2{grid-template-columns:1fr}}
+
+.card{
+  background:var(--card);border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow);
+}
+.card.clickable{cursor:pointer;transition:transform .08s ease}
+.card.clickable:hover{transform:translateY(-2px)}
+.card-icon{font-size:28px;margin-bottom:8px;color:var(--brand)}
+.card-title{font-weight:700}
+.card-sub{color:var(--muted);font-size:14px}
+
+.auth-card{max-width:420px;margin:40px auto}
+.vstack{display:flex;flex-direction:column}
+.hstack{display:flex;align-items:center}
+.gap{gap:10px}
+.mb{margin-bottom:12px}
+.between{justify-content:space-between}
+.center{align-items:center}
+
+input,select,textarea{
+  width:100%;padding:12px;border:1px solid #e5cdba;border-radius:12px;background:white;color:var(--text)
+}
+input:focus,textarea:focus,select:focus{outline:2px solid #e8c8a8}
+
+.inline input{width:auto}
+
+.btn{
+  padding:10px 14px;border:none;border-radius:12px;background:var(--brand-2);
+  color:white;cursor:pointer;box-shadow:var(--shadow);font-weight:600
+}
+.btn.primary{background:#b05a2f}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.7);box-shadow:none}
+.btn.danger{background:var(--danger)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px;border-bottom:1px solid #ecd6bf;text-align:left}
+.table tbody tr:hover{background:#fff;}
+
+.footer{
+  text-align:center;padding:16px;background:var(--brand);color:white;margin-top:24px
+}
+.search{padding:12px;border-radius:12px;margin-bottom:10px;width:100%}
+
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:8px 0;border-bottom:1px dashed #e6cbb1}
+
+.cart{border:1px dashed #e0c3a1;border-radius:12px;padding:12px;min-height:120px;background:white}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid #f3e2ce}
+.cart-item:last-child{border-bottom:none}
+.qty input{width:64px;text-align:center}
+.total{font-size:20px;font-weight:700}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .chip{background:white;border:1px solid #efdabf;border-radius:999px;padding:8px 12px;cursor:pointer}
+
+.badge{padding:2px 8px;border-radius:999px;font-size:12px}
+.badge.danger{background:#ffe0db;color:#c2392b}
+.badge.ok{background:#e8f6ea;color:#2b8a3e}
+
+.toast{position:fixed;right:16px;bottom:16px;background:#333;color:white;padding:10px 12px;border-radius:10px;opacity:0;transform:translateY(8px);transition:all .2s ease}
+.toast.show{opacity:1;transform:translateY(0)}
+
+.otp-sim{font-family:monospace;background:white;border:1px dashed #e0c3a1;padding:10px;border-radius:10px;margin-bottom:10px;display:inline-block}
+
+@keyframes fade{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.logo-img{height:48px;width:auto;border-radius:8px;background:white;padding:2px}
+
+/* Layout: make footer stick to bottom */
+body{display:flex;flex-direction:column;min-height:100vh}
+#view-root{flex:1}
+.footer{margin-top:auto}

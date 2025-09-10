@@ -1,0 +1,1 @@
+// admin/dashboard.js — (placeholder for future admin-specific logic)

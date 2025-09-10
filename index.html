@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mama Mary’s Butcheron Original • POS</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="logo.png" alt="Mama Mary's Logo" class="logo-img"/>
+      <div>
+        <div class="brand-title">Mama Mary’s Butcheron Original</div>
+        <div class="brand-sub">Point of Sale & Inventory</div>
+      </div>
+    </div>
+   <nav class="top-actions">
+   <button class="btn ghost" data-action="back" title="Back">⟵ Back</button>
+   <button class="btn danger ghost" data-action="logout" title="Logout" id="logoutBtn" style="display:none;">⎋ Logout</button>
+   </nav>  
+  </header>
+
+  <main id="view-root">
+    <!-- HOME -->
+    <section data-view="home" class="screen active">
+      <h2 class="heading">Select Role</h2>
+      <div class="grid cards-2">
+        <div class="card clickable" data-nav="admin-login">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title">Admin</div>
+          <div class="card-sub">Manage products, barcodes, sales & reports</div>
+        </div>
+        <div class="card clickable" data-nav="employee-dashboard">
+          <div class="card-icon">🧑‍🍳</div>
+          <div class="card-title">Employee</div>
+          <div class="card-sub">Sell, track inventory, and submit reports</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN LOGIN -->
+    <section data-view="admin-login" class="screen">
+      <div class="auth-card">
+        <h2 class="heading">Administrator Login</h2>
+        <form id="adminLoginForm" class="vstack gap">
+          <label>Username or Email
+            <input type="text" id="adminUser" placeholder="admin"/>
+          </label>
+          <label>Password
+            <input type="password" id="adminPass" placeholder="••••••••"/>
+          </label>
+          <button class="btn primary" type="submit">Login</button>
+          <p class="hint">Default: <b>admin</b> / <b>admin123</b></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ADMIN OTP -->
+    <section data-view="admin-otp" class="screen">
+      <div class="auth-card">
+        <h2 class="heading">OTP Verification</h2>
+        <p class="hint">Enter the 6-digit code sent to your registered email. (Simulated below)</p>
+        <div id="otpSimulated" class="otp-sim"></div>
+        <form id="otpForm" class="vstack gap">
+          <label>One-Time Password
+            <input type="text" maxlength="6" id="otpInput" placeholder="000000"/>
+          </label>
+          <button class="btn primary" type="submit">Verify</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section data-view="admin-dashboard" class="screen">
+      <h2 class="heading">Administrator Dashboard</h2>
+      <div class="grid cards-2">
+        <div class="card clickable" data-nav="admin-inventory">
+          <div class="card-icon">📦</div>
+          <div class="card-title">Inventory Management</div>
+          <div class="card-sub">Add, update, and manage product inventory</div>
+        </div>
+        <div class="card clickable" data-nav="admin-search">
+          <div class="card-icon">🔍</div>
+          <div class="card-title"></div>
+          <div class="card-sub">Search and view product details</div>
+        </div>
+        <div class="card clickable" data-nav="admin-barcode">
+          <div class="card-icon">🏷️</div>
+          <div class="card-title">Barcode Management</div>
+          <div class="card-sub">Assign and validate barcodes</div>
+        </div>
+        <div class="card clickable" data-nav="admin-sales">
+          <div class="card-icon">🧾</div>
+          <div class="card-title">Sales Management</div>
+          <div class="card-sub">View/void all transactions</div>
+        </div>
+        <div class="card clickable" data-nav="admin-reports">
+          <div class="card-icon">📈</div>
+          <div class="card-title">Reports</div>
+          <div class="card-sub">Generate & export reports</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMPLOYEE DASHBOARD -->
+    <section data-view="employee-dashboard" class="screen">
+      <div class="flex between center mb">
+        <h2 class="heading">Employee Dashboard</h2>
+        <div class="hstack gap">
+          <label class="inline">Name
+            <input id="cashierName" type="text" placeholder="Enter your name"/>
+          </label>
+          <button class="btn" id="saveCashier">Set</button>
+        </div>
+      </div>
+      <div class="grid cards-2">
+        <div class="card clickable" data-nav="emp-sales">
+          <div class="card-icon">🧮</div>
+          <div class="card-title">Sales Processing</div>
+          <div class="card-sub">Scan barcodes, build cart & checkout</div>
+        </div>
+        <div class="card clickable" data-nav="emp-tracking">
+          <div class="card-icon">📊</div>
+          <div class="card-title">Inventory Tracking</div>
+          <div class="card-sub">Live stock with low-stock alerts</div>
+        </div>
+        
+          <div class="card-title"></div>
+          <div class="card-sub"></div>
+        </div>
+        <div class="card clickable" data-nav="emp-reporting">
+          <div class="card-icon">🗂️</div>
+          <div class="card-title">Reporting & Sales</div>
+          <div class="card-sub">Personal sales & end-of-day summary</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN: INVENTORY -->
+    <section data-view="admin-inventory" class="screen">
+      <div class="flex between center">
+        <h2 class="heading">Inventory Management</h2>
+        <div class="hstack gap">
+          <button class="btn" id="exportInventory">Export CSV</button>
+          <button class="btn" id="seedSample">Seed Sample Items</button>
+        </div>
+      </div>
+      <div class="grid two">
+        <form id="invForm" class="card vstack gap">
+          <h3>Add / Update Product</h3>
+          <input type="hidden" id="invId"/>
+          <label>Name<input id="invName" type="text" required/></label>
+          <label>Category<input id="invCategory" type="text"/></label>
+          <label>Price (₱)<input id="invPrice" type="number" min="0" step="0.01" required/></label>
+          <label>Stock<input id="invStock" type="number" min="0" required/></label>
+          <label>Barcode<input id="invBarcode" type="text" placeholder="Auto or enter"/></label>
+          <div class="hstack gap">
+            <button class="btn primary" type="submit">Save</button>
+            <button class="btn ghost" type="reset" id="invReset">Reset</button>
+          </div>
+        </form>
+        <div class="card">
+          <div class="flex between center mb">
+            <input class="search" id="invSearch" placeholder="Search products..."/>
+            <label class="inline">Low-stock threshold
+              <input id="lowThreshold" type="number" min="0" value="5" style="width:6rem"/>
+            </label>
+          </div>
+          <table class="table" id="invTable">
+            <thead><tr><th>Name</th><th>Category</th><th>Barcode</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN: SEARCH -->
+    <section data-view="admin-search" class="screen">
+      <h2 class="heading"></h2>
+      <div class="card">
+        <input class="search" id="adminSearchBox" placeholder="Search by name, category, or barcode..."/>
+        <table class="table" id="adminSearchTable">
+          <thead><tr><th>Name</th><th>Category</th><th>Barcode</th><th>Price</th><th>Stock</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ADMIN: BARCODE -->
+    <section data-view="admin-barcode" class="screen">
+      <h2 class="heading">Barcode Management</h2>
+      <div class="grid two">
+        <div class="card vstack gap">
+          <h3>Assign / Update Barcode</h3>
+          <label>Choose Product
+            <select id="bcProduct"></select>
+          </label>
+          <label>Barcode
+            <input id="bcValue" type="text" placeholder="e.g., 123456789012"/>
+          </label>
+          <div class="hstack gap">
+            <button class="btn primary" id="bcSave">Save</button>
+            <button class="btn" id="bcGenerate">Generate</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Products without Barcodes</h3>
+          <ul id="noBarcodeList" class="list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN: SALES -->
+    <section data-view="admin-sales" class="screen">
+      <h2 class="heading">Sales Management</h2>
+      <div class="card">
+        <table class="table" id="salesTable">
+          <thead><tr><th>ID</th><th>Date</th><th>Cashier</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ADMIN: REPORTS -->
+    <section data-view="admin-reports" class="screen">
+      <h2 class="heading">Reports</h2>
+      <div class="card vstack gap">
+        <div class="hstack gap">
+          <label class="inline">From <input type="date" id="repFrom"/></label>
+          <label class="inline">To <input type="date" id="repTo"/></label>
+          <button class="btn" id="runReport">Run</button>
+          <button class="btn" id="exportReport">Export CSV</button>
+        </div>
+        <div id="reportSummary" class="report"></div>
+      </div>
+    </section>
+
+    <!-- EMPLOYEE: SALES -->
+    <section data-view="emp-sales" class="screen">
+      <h2 class="heading">Sales Processing</h2>
+      <div class="grid two">
+        <div class="card vstack gap">
+          <label>Scan / Enter Barcode
+            <input id="scanInput" type="text" placeholder="Scan barcode here" autofocus/>
+          </label>
+          <div id="cart" class="cart"></div>
+          <div class="hstack between center">
+            <div class="total">Total: ₱<span id="cartTotal">0.00</span></div>
+            <button class="btn primary" id="checkoutBtn">Checkout</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Quick Products</h3>
+          <div id="quickProducts" class="chips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMPLOYEE: TRACKING -->
+    <section data-view="emp-tracking" class="screen">
+      <h2 class="heading">Real-Time Inventory Tracking</h2>
+      <div class="card">
+        <table class="table" id="trackTable">
+          <thead><tr><th>Name</th><th>Category</th><th>Barcode</th><th>Price</th><th>Stock</th><th>Alert</th></tr></thead>
+        <tbody></tbody></table>
+      </div>
+    </section>
+
+    <!-- EMPLOYEE: REPORTING -->
+    <section data-view="emp-reporting" class="screen">
+      <h2 class="heading">Reporting & Sales Tracking</h2>
+      <div class="grid two">
+        <div class="card">
+          <h3>Your Sales</h3>
+          <table class="table" id="mySalesTable">
+            <thead><tr><th>Date</th><th>ID</th><th>Items</th><th>Total</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="card vstack gap">
+          <h3>End-of-Day Summary</h3>
+          <label>Total Cash Counted (₱)
+            <input id="eodCash" type="number" min="0" step="0.01"/>
+          </label>
+          <label>Notes
+            <textarea id="eodNotes" rows="4" placeholder="Observations, shortages, etc."></textarea>
+          </label>
+          <button class="btn primary" id="submitEOD">Submit Summary</button>
+          <div id="eodList" class="list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 Mama Mary’s Butcheron Original. All rights reserved.</footer>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin/login.js"></script>
+  <script src="js/admin/dashboard.js"></script>
+  <script src="js/admin/inventory.js"></script>
+  <script src="js/admin/search.js"></script>
+  <script src="js/admin/barcode.js"></script>
+  <script src="js/admin/sales.js"></script>
+  <script src="js/admin/reports.js"></script>
+  <script src="js/employee/dashboard.js"></script>
+  <script src="js/employee/sales.js"></script>
+  <script src="js/employee/tracking.js"></script>
+    <script src="js/employee/reporting.js"></script>
+</body>
+</html>
